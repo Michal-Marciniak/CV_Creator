@@ -71,6 +71,7 @@ export default {
   font-size: 3vw;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 0px 5px 1px #c5b4b4;
 }
 .header__logo {
   display: flex;

@@ -2,12 +2,7 @@
   <div class="contentLeft">
     <div class="contentLeft-container">
       <!----------------- Form Upper -------------------->
-      <form
-        class="contentLeft__form"
-        action="upload.php"
-        method="POST"
-        enctype="multipart/form-data"
-      >
+      <form class="contentLeft__form">
         <div class="form-group">
           <label class="form-description">Name</label>
           <div class="check-input">
@@ -53,15 +48,11 @@
       <div class="contentLeft__image">
         <div class="contentLeft__image-left" @click="uploadImage()">
           <i class="fa fa-camera contentLeft__image-icon">
-            <input type="file" class="input-image" name="file" />
+            <input type="file" class="input-image" />
           </i>
         </div>
         <div>
-          <button
-            type="submit"
-            name="submit"
-            class="button-upload-image btn btn-secondary"
-          >
+          <button type="submit" class="button-upload-image btn btn-secondary">
             Upload Image
           </button>
         </div>
@@ -150,6 +141,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -166,25 +159,28 @@ export default {
     validateEmail(email) {
       var userEmail = email;
       if (userEmail.includes("@")) {
-        this.State.showEmail = true;
+        this.state.showEmail = true;
         return true;
       } else {
-        this.State.showEmail = false;
+        this.state.showEmail = false;
         return false;
       }
     },
     validateNumber(number) {
       var userNumber = number;
       if (userNumber.length != 9) {
-        this.State.showNumber = false;
+        this.state.showNumber = false;
+        return false;
+      } else if (userNumber != Number(userNumber)) {
         return false;
       } else {
-        this.State.showNumber = true;
+        this.state.showNumber = true;
         return true;
       }
     },
     uploadImage() {
-      document.querySelector(".input-image").click();
+      let SelectedImage = document.querySelector(".input-image");
+      SelectedImage.click();
     },
     goToStep2() {
       this.$store.dispatch("Step1Complete");
@@ -192,12 +188,7 @@ export default {
     }
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    State() {
-      return this.$store.state;
-    }
+    ...mapGetters(["state", "user"])
   }
 };
 </script>
@@ -267,8 +258,9 @@ export default {
 }
 .contentLeft__image-text {
   margin-top: 10vh;
-  color: #a19898;
+  color: #8b7d7d;
   font-size: 2vw;
+  font-weight: normal;
 }
 
 .contentLeft__buttons {
@@ -355,8 +347,8 @@ export default {
     font-size: 2vw;
   }
   .check-input > i {
-    margin-left: -3vw;
-    font-size: 2vw;
+    margin-left: -2.5vw;
+    font-size: 1.7vw;
   }
   .contentLeft__ButtonSubmit {
     margin-top: 5vw;
@@ -377,8 +369,8 @@ export default {
     font-size: 1.5vw;
   }
   .check-input > i {
-    margin-left: -2.5vw;
-    font-size: 2vw;
+    margin-left: -2vw;
+    font-size: 1.5vw;
   }
   .contentLeft__ButtonSubmit {
     margin-top: 5vw;

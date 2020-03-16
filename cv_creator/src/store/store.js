@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     showEmail: false,
     showNumber: false,
     index: 0,
+    skills_index: 0,
     user: {
       name: "",
       lastname: "",
@@ -28,7 +29,37 @@ export const store = new Vuex.Store({
           },
           description: ""
         }
-      ]
+      ],
+      skills: []
+    }
+  },
+  getters: {
+    state: state => {
+      return state;
+    },
+    user: state => {
+      return state.user;
+    },
+    index: state => {
+      return state.index;
+    },
+    skillsIndex: state => {
+      return state.skills_index;
+    },
+    currentJob: state => {
+      return state.current_job;
+    },
+    showEmail: state => {
+      return state.showEmail;
+    },
+    showNumber: state => {
+      return state.showNumber;
+    },
+    jobs: state => {
+      return state.user.jobs;
+    },
+    skills: state => {
+      return state.user.skills;
     }
   },
   mutations: {
@@ -54,7 +85,21 @@ export const store = new Vuex.Store({
       state.step3_complete = true;
     },
     addAnotherJob: state => {
+      state.user.jobs.push({
+        position: "",
+        period: {
+          from: "",
+          to: ""
+        },
+        description: ""
+      });
+
       state.index++;
+    },
+    addAnotherSkill: state => {
+      state.user.skills.push("");
+
+      state.skills_index++;
     }
   },
   actions: {
@@ -78,6 +123,9 @@ export const store = new Vuex.Store({
     },
     addAnotherJob: ({ commit }) => {
       commit("addAnotherJob");
+    },
+    addAnotherSkill: ({ commit }) => {
+      commit("addAnotherSkill");
     }
   }
 });

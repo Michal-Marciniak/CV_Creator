@@ -14,63 +14,26 @@
     <div class="contentRight__data">
       <!----------- Expirience & Skills ---------->
       <div class="contentRight__data-left">
-        <form class="contentLeft__form">
-          <div class="form-group">
-            <!----------------- Expirience -------------------->
-            <div class="expirience-text">Work Expirience</div>
+        <div class="contentRight__data-left-container">
+          <!----------------- Expirience -------------------->
+          <div class="work-expirience-text">Work Expirience</div>
+          <contentRightWorkExpirience
+            v-for="(job, index) in jobs"
+            :key="index"
+            :index="index"
+            class="single-work"
+          >
+          </contentRightWorkExpirience>
 
-            <!----------------- Position & Period -------------------->
-            <div class="position_and_period">
-              <!----------------- Position -------------------->
-              <div class="check-input">
-                <div class="input-icon">
-                  <div class="heading">
-                    <i class="fa fa-caret-right"></i> Position -
-                  </div>
-                  <div class="heading-description">
-                    {{ user.jobs[index].position }}
-                  </div>
-                </div>
-              </div>
-
-              <!----------------- Period -------------------->
-              <div class="check-input">
-                <div class="from-to">
-                  <!----------------- From -------------------->
-                  <div class="input-icon">
-                    <div class="heading">
-                      <i class="fa fa-caret-right"></i> From -
-                    </div>
-                    <div class="heading-description">
-                      <i>{{ user.jobs[index].period.from }}</i>
-                    </div>
-                  </div>
-                  <!----------------- To -------------------->
-                  <div class="input-icon">
-                    <div class="heading">
-                      To -
-                    </div>
-                    <div class="heading-description">
-                      <i>{{ user.jobs[index].period.to }}</i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!----------------- Description -------------------->
-            <div class="check-input">
-              <div class="input-icon">
-                <div class="heading">
-                  <i class="fa fa-caret-right"></i> Description:
-                </div>
-                <div class="heading-description">
-                  {{ user.jobs[index].description }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+          <div class="skills-text">Skills</div>
+          <contentRightSkills
+            v-for="(skill, index) in skills"
+            :key="index"
+            :props_skill_index="index"
+            class="single-skill"
+          >
+          </contentRightSkills>
+        </div>
       </div>
       <!----------- Personal Data ---------->
       <div class="contentRight__data-right">
@@ -102,27 +65,36 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import contentRightWorkExpirience from "./ContentRightWorkExpirience";
+import contentRightSkills from "./ContentRightSkills";
+
 export default {
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    showEmail() {
-      return this.$store.state.showEmail;
-    },
-    showNumber() {
-      return this.$store.state.showNumber;
-    },
-    index() {
-      return this.$store.state.index;
-    }
+    ...mapGetters([
+      "state",
+      "currentJob",
+      "user",
+      "showEmail",
+      "showNumber",
+      "jobs",
+      "skills"
+    ])
+  },
+  components: {
+    contentRightWorkExpirience,
+    contentRightSkills
   }
 };
 </script>
 
 <style scoped>
+.contentRight {
+  height: 100%;
+}
 .contentRight__header {
-  padding: 1vw;
+  padding: 0.2vw;
   background-color: #3e3e3e;
   color: whitesmoke;
 }
@@ -131,18 +103,13 @@ export default {
   font-size: 2.5vw;
   padding: 1vw 2vw;
 }
-
 .contentRight__data {
-  height: 85vh;
+  height: 102vh;
   display: grid;
   grid-template-columns: 2fr 1fr;
 }
 
-.contentRight__data-left {
-  background-color: whitesmoke;
-  height: 100%;
-}
-
+/******* Personal Data **********/
 .contentRight__data-right {
   background-color: lightgray;
   height: 100%;
@@ -152,11 +119,9 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 .article__image {
   transform: scale(0.5);
 }
-
 .article-description {
   padding: 0.5vw;
   font-size: 1.2vw;
@@ -188,6 +153,17 @@ export default {
     font-size: 2.8vw;
     padding-bottom: 1vw;
   }
+  .work-expirience-text {
+    font-size: 2.3vw;
+    margin: 2vh 2vw -0.5vh 2vw;
+  }
+  .skills-text {
+    font-size: 2.3vw;
+    margin: 2vh 2vw -0.5vh 2vw;
+  }
+  .single-work {
+    margin: 1.5vh 0vw -5vh 0vw;
+  }
 }
 
 /* Small devices */
@@ -202,6 +178,17 @@ export default {
   .article-description {
     font-size: 2.5vw;
     padding-bottom: 1vw;
+  }
+  .work-expirience-text {
+    font-size: 2.5vw;
+    margin: 2vh 2vw -1vh 2vw;
+  }
+  .skills-text {
+    font-size: 2.5vw;
+    margin: 2vh 2vw -1vh 2vw;
+  }
+  .single-work {
+    margin: 1.5vh 0vw -7vh 0vw;
   }
 }
 
@@ -218,6 +205,17 @@ export default {
     font-size: 2.5vw;
     padding-bottom: 1vw;
   }
+  .work-expirience-text {
+    font-size: 2vw;
+    margin: 2vh 2vw -3vh 2vw;
+  }
+  .skills-text {
+    font-size: 2vw;
+    margin: 2vh 2vw -3vh 2vw;
+  }
+  .single-work {
+    margin: 1.5vh 0vw -7vh 0vw;
+  }
 }
 
 /* Large devices */
@@ -232,6 +230,17 @@ export default {
   .article-description {
     font-size: 1.5vw;
     padding-bottom: 1vw;
+  }
+  .work-expirience-text {
+    font-size: 1.5vw;
+    margin: 2vh 2vw -5vh 2vw;
+  }
+  .skills-text {
+    font-size: 1.5vw;
+    margin: 2vh 2vw -5vh 2vw;
+  }
+  .single-work {
+    margin: 1.5vh 0vw -7vh 0vw;
   }
 }
 
@@ -248,144 +257,39 @@ export default {
     font-size: 1.5vw;
     padding-bottom: 1vw;
   }
+  .work-expirience-text {
+    font-size: 1.5vw;
+    margin: 2vh 2vw -5vh 2vw;
+  }
+  .skills-text {
+    font-size: 1.5vw;
+    margin: 2vh 2vw -5vh 2vw;
+  }
+  .single-work {
+    margin: 1.5vh 0vw -8vh 0vw;
+  }
 }
 
-/*********   Expirience **********/
-.contentLeft__form {
-  padding: 2vw 3vw;
+/******* Work expirience & Skills ******/
+.contentRight__data-left {
+  background-color: whitesmoke;
+  height: 100%;
 }
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-.expirience-text {
-  color: black;
-  border-bottom: 1px solid black;
+.work-expirience-text {
   font-weight: bold;
+  border-bottom: 0.5px solid rgb(126, 117, 117);
+  margin-bottom: -2.5vh;
 }
-.heading {
+.skills-text {
   font-weight: bold;
-  padding-right: 1vw;
-  color: black;
-  font-size: 2vw;
+  border-bottom: 0.5px solid rgb(126, 117, 117);
+  margin: 8vh 2vw 3vh 2vw;
 }
-.heading-description {
-  font-size: 2vw;
+.single-work {
+  padding: 0.6vh 2vw;
 }
-
-.position_and_period {
-  padding-top: 2vw;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-}
-.from-to {
-  display: flex;
-  justify-content: space-between;
-}
-
-.check-input {
-  display: flex;
-  flex-direction: column;
-  padding: 1vw 0;
-}
-.input-icon {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-
-/* Mobile phones */
-@media screen and (max-width: 543px) {
-  .contentLeft__form {
-    padding: 3vw 3.5vw;
-  }
-  .expirience-text {
-    font-size: 3vw;
-  }
-  .heading {
-    font-size: 2.3vw;
-  }
-  .heading-description {
-    font-size: 2vw;
-  }
-  .check-input {
-    padding: 0.6vw 0;
-  }
-}
-
-/* Small devices */
-@media screen and (min-width: 544px) and (max-width: 767px) {
-  .contentLeft__form {
-    padding: 3vw 3.5vw;
-  }
-  .expirience-text {
-    font-size: 2.8vw;
-  }
-  .heading {
-    font-size: 2.2vw;
-  }
-  .heading-description {
-    font-size: 2vw;
-  }
-  .check-input {
-    padding: 0.6vw 0;
-  }
-}
-
-/* Medium devices */
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .contentLeft__form {
-    padding: 3vw 3.5vw;
-  }
-  .expirience-text {
-    font-size: 2.6vw;
-  }
-  .heading {
-    font-size: 1.8vw;
-  }
-  .heading-description {
-    font-size: 2vw;
-  }
-  .check-input {
-    padding: 0.6vw 0;
-  }
-}
-
-/* Large devices */
-@media screen and (min-width: 992px) and (max-width: 1199px) {
-  .contentLeft__form {
-    padding: 2vw;
-  }
-  .expirience-text {
-    font-size: 2vw;
-  }
-  .heading {
-    font-size: 1.4vw;
-  }
-  .heading-description {
-    font-size: 1.2vw;
-  }
-  .check-input {
-    padding: 0.3vw 0;
-  }
-}
-
-/* Extra Large devices */
-@media screen and (min-width: 1200px) {
-  .contentLeft__form {
-    padding: 2vw;
-  }
-  .expirience-text {
-    font-size: 1.8vw;
-  }
-  .heading {
-    font-size: 1.3vw;
-  }
-  .heading-description {
-    font-size: 1.1vw;
-  }
-  .check-input {
-    padding: 0.3vw 0;
-  }
+.single-skill {
+  margin: -1vh 0;
+  padding: 0 1vw;
 }
 </style>

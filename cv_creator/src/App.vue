@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container-fluid">
+  <div id="app" class="container-fluid appContainer">
     <Header />
     <MainContent />
   </div>
@@ -18,4 +18,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.appContainer {
+  padding-top: 3vh;
+}
+</style>
