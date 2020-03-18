@@ -29,7 +29,8 @@
           class="header__step2 header__step"
           :class="{
             complete: this.$store.state.step2_complete,
-            current: this.$store.state.current_step === 'step2'
+            current: this.$store.state.current_step === 'step2',
+            unavailable: !this.$store.state.isStep2Possible
           }"
           @click="Step2"
         >
@@ -40,7 +41,8 @@
           class="header__step3 header__step"
           :class="{
             complete: this.$store.state.step3_complete,
-            current: this.$store.state.current_step === 'step3'
+            current: this.$store.state.current_step === 'step3',
+            unavailable: !this.$store.state.isStep3Possible
           }"
           @click="Step3"
         >
@@ -101,6 +103,9 @@ export default {
 }
 .complete {
   color: rgb(0, 0, 0);
+}
+.unavailable {
+  cursor: not-allowed;
 }
 
 .header__steps {

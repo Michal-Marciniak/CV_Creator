@@ -21,5 +21,6 @@ export default {
 <style>
 .appContainer {
   padding-top: 3vh;
+  max-width: 1300px;
 }
 </style>

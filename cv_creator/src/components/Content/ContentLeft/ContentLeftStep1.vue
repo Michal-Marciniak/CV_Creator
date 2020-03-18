@@ -46,7 +46,7 @@
 
       <!----------------- Upload Image -------------------->
       <div class="contentLeft__image">
-        <div class="contentLeft__image-left" @click="uploadImage()">
+        <div class="contentLeft__image-left" @click.prevent="uploadImage()">
           <i class="fa fa-camera contentLeft__image-icon">
             <input type="file" class="input-image" />
           </i>
@@ -135,6 +135,9 @@
             Next Step
           </button>
         </div>
+        <div class="alert alert-danger unvisible" role="alert">
+          Please fill in all fields!
+        </div>
       </div>
     </div>
   </div>
@@ -183,8 +186,22 @@ export default {
       SelectedImage.click();
     },
     goToStep2() {
-      this.$store.dispatch("Step1Complete");
-      this.$store.dispatch("Step2");
+      var alertDiv = document.querySelector(".alert-danger");
+      if (
+        this.user.name.length != 0 &&
+        this.user.lastname.length != 0 &&
+        this.user.email.length != 0 &&
+        this.user.number.length != 0 &&
+        this.user.adress.length != 0
+      ) {
+        alertDiv.classList.add("unvisible");
+        this.state.isStep2Possible = true;
+        this.$store.dispatch("Step1Complete");
+        this.$store.dispatch("Step2");
+      } else {
+        this.state.isStep2Possible = false;
+        alertDiv.classList.add("visible");
+      }
     }
   },
   computed: {
@@ -196,7 +213,7 @@ export default {
 <style scoped>
 .contentLeft {
   margin: 3vh 0;
-  height: fit-content;
+  height: 118vh;
   box-shadow: 0px 0px 5px 1px #c5b4b4;
 }
 .contentLeft-container {
@@ -271,6 +288,12 @@ export default {
 .contentLeft__ButtonSubmit {
   width: 10vw;
 }
+.unvisible {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
 
 /* Mobile phones */
 @media screen and (max-width: 543px) {
@@ -291,6 +314,11 @@ export default {
   .button-upload-image {
     margin-top: 8vh;
     font-size: 2.5vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 35vw;
+    height: 15vh;
   }
 }
 
@@ -314,6 +342,12 @@ export default {
     margin-top: 8vh;
     font-size: 2.5vw;
   }
+  .alert-danger {
+    width: 30vw;
+    text-align: center;
+    height: 15vh;
+    margin-top: 5vh;
+  }
 }
 
 /* Medium devices */
@@ -335,6 +369,12 @@ export default {
   .button-upload-image {
     margin-top: 7vh;
     font-size: 2.5vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 25vw;
+    height: 15vh;
+    margin-top: 5vh;
   }
 }
 
@@ -358,6 +398,12 @@ export default {
     margin-top: 10vh;
     font-size: 1.4vw;
   }
+  .alert-danger {
+    text-align: center;
+    width: 15vw;
+    height: 15vh;
+    margin-top: 5vh;
+  }
 }
 
 /* Extra Large devices */
@@ -379,6 +425,12 @@ export default {
   .button-upload-image {
     margin-top: 10vh;
     font-size: 1.4vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 20vw;
+    height: 10vh;
+    margin-top: 10vh;
   }
 }
 </style>

@@ -25,15 +25,20 @@
         </div>
       </div>
 
-      <div>
-        <button
-          class="btn btn-primary btn-lg
+      <div class="contentLeft__buttons">
+        <div>
+          <button
+            class="btn btn-primary btn-lg
           button-complete
           "
-          @click.prevent="completeCV()"
-        >
-          Complete
-        </button>
+            @click.prevent="completeCV()"
+          >
+            Complete
+          </button>
+        </div>
+        <div class="alert alert-danger alertDanger3 unvisible" role="alert">
+          Please fill in all fields!
+        </div>
       </div>
     </div>
   </form>
@@ -45,8 +50,16 @@ import { mapGetters } from "vuex";
 export default {
   methods: {
     addAnotherSkill() {
-      this.$store.dispatch("addAnotherSkill");
-    }
+      var alertDiv3 = document.querySelector(".alertDanger3");
+
+      if (this.skills[this.skillsIndex].length != 0) {
+        this.$store.dispatch("addAnotherSkill");
+        alertDiv3.classList.add("unvisible");
+      } else {
+        alertDiv3.classList.add("visible");
+      }
+    },
+    completeCV() {}
   },
   computed: {
     ...mapGetters(["skills", "skillsIndex"])
@@ -75,6 +88,16 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 1vh 0 5vh 0;
+}
+.contentLeft__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.visible {
+  visibility: visible;
+}
+.unvisible {
+  visibility: hidden;
 }
 
 /* Mobile phones */

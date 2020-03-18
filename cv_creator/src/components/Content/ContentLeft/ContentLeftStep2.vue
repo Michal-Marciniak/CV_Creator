@@ -14,6 +14,10 @@
             Next Step
           </button>
         </div>
+        <!----------------- Button Danger -------------------->
+        <div class="alert alert-danger alertDanger2 unvisible" role="alert">
+          Please fill in all fields!
+        </div>
         <!----------------- Button Add More -------------------->
         <div>
           <button
@@ -30,17 +34,46 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ContentLeftWorkExpirience from "./ContentLeftWorkExpirience";
 
 export default {
   methods: {
     goToStep3() {
-      this.$store.dispatch("Step2Complete");
-      this.$store.dispatch("Step3");
+      var alertDiv2 = document.querySelector(".alertDanger2");
+      if (
+        this.user.jobs[this.index].position.length != 0 &&
+        this.user.jobs[this.index].period.from.length != 0 &&
+        this.user.jobs[this.index].period.to.length != 0 &&
+        this.user.jobs[this.index].description.length != 0
+      ) {
+        alertDiv2.classList.add("unvisible");
+        this.state.isStep3Possible = true;
+        this.$store.dispatch("Step2Complete");
+        this.$store.dispatch("Step3");
+      } else {
+        this.state.isStep3Possible = false;
+        alertDiv2.classList.add("visible");
+      }
     },
     addAnotherJob() {
-      this.$store.dispatch("addAnotherJob");
+      var alertDiv2 = document.querySelector(".alertDanger2");
+      if (
+        this.user.jobs[this.index].position.length != 0 &&
+        this.user.jobs[this.index].period.from.length != 0 &&
+        this.user.jobs[this.index].period.to.length != 0 &&
+        this.user.jobs[this.index].description.length != 0
+      ) {
+        alertDiv2.classList.add("unvisible");
+        this.$store.dispatch("addAnotherJob");
+      } else {
+        this.state.isStep3Possible = false;
+        alertDiv2.classList.add("visible");
+      }
     }
+  },
+  computed: {
+    ...mapGetters(["index", "user", "state"])
   },
   components: {
     ContentLeftWorkExpirience
@@ -60,7 +93,13 @@ export default {
 }
 .contentLeft__buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+.visible {
+  visibility: visible;
+}
+.unvisible {
+  visibility: hidden;
 }
 
 /* Mobile phones */
@@ -71,7 +110,12 @@ export default {
   }
   .addAnotherJob {
     font-size: 3vw;
-    margin: 3vh 1vw;
+    margin: 2vh 1vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 30vw;
+    margin-top: 2vh;
   }
 }
 
@@ -83,7 +127,12 @@ export default {
   }
   .addAnotherJob {
     font-size: 3vw;
-    margin: 3vh 1vw;
+    margin: 2vh 1vw;
+  }
+  .alert-danger {
+    width: 30vw;
+    text-align: center;
+    margin-top: 2vh;
   }
 }
 
@@ -95,7 +144,12 @@ export default {
   }
   .addAnotherJob {
     font-size: 2vw;
-    margin: 3vh 1vw;
+    margin: 2vh 1vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 25vw;
+    margin-top: 2vh;
   }
 }
 
@@ -107,7 +161,12 @@ export default {
   }
   .addAnotherJob {
     font-size: 1.7vw;
-    margin: 3vh 1vw;
+    margin: 2vh 1vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 15vw;
+    margin-top: 2vh;
   }
 }
 
@@ -119,7 +178,12 @@ export default {
   }
   .addAnotherJob {
     font-size: 1.5vw;
-    margin: 3vh 1vw;
+    margin: 2vh 1vw;
+  }
+  .alert-danger {
+    text-align: center;
+    width: 15vw;
+    margin-top: 2vh;
   }
 }
 </style>

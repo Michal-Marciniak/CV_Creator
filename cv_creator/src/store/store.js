@@ -10,6 +10,8 @@ export const store = new Vuex.Store({
     step1_complete: false,
     step2_complete: false,
     step3_complete: false,
+    isStep2Possible: false,
+    isStep3Possible: false,
     showEmail: false,
     showNumber: false,
     index: 0,
@@ -71,15 +73,19 @@ export const store = new Vuex.Store({
       state.step1_complete = true;
     },
     Step2: state => {
-      state.current_component = "step2_component";
-      state.current_step = "step2";
+      if (state.isStep2Possible) {
+        state.current_component = "step2_component";
+        state.current_step = "step2";
+      }
     },
     Step2Complete: state => {
       state.step2_complete = true;
     },
     Step3: state => {
-      state.current_component = "step3_component";
-      state.current_step = "step3";
+      if (state.isStep3Possible) {
+        state.current_component = "step3_component";
+        state.current_step = "step3";
+      }
     },
     Step3Complete: state => {
       state.step3_complete = true;
